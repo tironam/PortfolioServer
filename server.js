@@ -1,30 +1,7 @@
-const http = require('http')
-const { readFile } = require('fs')
-const { promisify } = require('util')
+const express = require('express')
+const { join } = require('path')
+const app = express()
 
-const rf = promisify(readFile)
+app.use(express.static(join(__dirname, 'public')))
 
-const server = http.createServer((req, res) => {
-    
-    switch (req.url) {
-        case '/':
-            rf('index.html', 'utf8')
-                .then(html => res.end(html))
-                .catch(err => console.log(err))
-            break
-        case '/portfolio':
-            rf('portfolio.html', 'utf8')
-                .then(html => res.end(html))
-                .catch(err => console.log(err))
-            break
-        case '/contact':
-            rf('contact.html', 'utf8')
-                .then(html => res.end(html))
-                .catch(err => console.log(err))
-            break
-    }
-})
-
-server.listen(3000, () => {
-    console.log('Server is ready!')
-})
+app.listen(3000, () => console.log('http://localhost:3000')) 
